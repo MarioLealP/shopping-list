@@ -1,4 +1,3 @@
-from tkinter import N
 from sqlmodel import Session
 from database import engine
 from models import (
