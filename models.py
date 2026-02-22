@@ -32,6 +32,53 @@ class Note(BaseModel):
     )
 
 
+class ShoppingListItem(BaseModel):
+    id: Optional[UUID] = Field(
+        None,
+        examples=["123e4567-e89b-12d3-a456-426614174000"],
+        description="The unique identifier for the shopping list item",
+    )
+    name: str = Field(
+        examples=["Milk"],
+        description="The name of the shopping list item",
+    )
+
+    extra_info: Optional[str] = Field(
+        None,
+        examples=["2% fat, 1 gallon"],
+        description="Additional information about the shopping list item",
+    )
+
+    quantity: int = Field(
+        examples=[2],
+        description="The quantity of the shopping list item",
+    )
+
+
+class ShoppingList(BaseModel):
+    id: Optional[UUID] = Field(
+        None,
+        examples=["123e4567-e89b-12d3-a456-426614174000"],
+        description="The unique identifier for the shopping list",
+    )
+    name: str = Field(
+        examples=["Weekly Groceries"],
+        description="The name of the shopping list",
+    )
+    items: List[ShoppingListItem] = Field(
+        default_factory=list,
+        description="The list of items in the shopping list",
+    )
+
+
+class ResponseShoppingList(BaseModel):
+    shopping_list: ShoppingList
+
+
+class ResponseListShoppingLists(BaseModel):
+    shopping_lists: List[ShoppingList]
+
+
 class ResponseListNotes(BaseModel):
     notes: List[Note]
 
@@ -45,4 +92,8 @@ class ErrorResponse(BaseModel):
 
 
 class NoteNotFoundError(HTTPException):
+    pass
+
+
+class ShoppingListNotFoundError(HTTPException):
     pass

@@ -16,3 +16,16 @@ class Note(BaseDatabaseModel, table=True):
     content: str
     create_date: datetime
     modified_date: datetime
+
+
+class ShoppingListItem(BaseDatabaseModel, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    name: str
+    extra_info: str | None
+    quantity: int
+    shopping_list_id: uuid.UUID = Field(foreign_key="shoppinglist.id")
+
+
+class ShoppingList(BaseDatabaseModel, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    name: str = Field(unique=True)
